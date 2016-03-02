@@ -1,3 +1,4 @@
+/*used*/
 #head-Background{
 	height: 125px;
 	border-bottom: 2px solid black;
@@ -5,6 +6,7 @@
 	
 	
 }
+/*used*/
 body
 {
 	background-image: url(background.jpg); 
@@ -210,12 +212,7 @@ select{
 
     
 }
-#iceCream{
-	width:140px;
-	height:140px;
-	border-bottom: 2px solid black;
 
-}
 .textMiddle{
 	text-align:center; padding: 5px; border-bottom:2px solid black;
 }
@@ -226,11 +223,6 @@ select{
 #ingredientTable{
 	height: 200px;
 }
-
-.p0{width: 20%; height:30px;}
-.p1{width: 50%;text-align: left;}
-.p2{width: 15%;}
-.p3{width: 15%; text-align: right;}
 
 		.table1 {
 		height: 80px;/*高度值不能少*/

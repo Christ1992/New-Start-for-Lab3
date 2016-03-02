@@ -12,21 +12,26 @@ var SideNavView = function (container, model) {
 
 	model.addObserver(this);
 	
-	//改变人数
+
+
+
+
+
+//改变人数
  	this.numberOfGuests.html(model.getNumberOfGuests());
 
 
 
-	//输出标题
+//输出标题
 	var html="";
 	html+="<div class='col-sm-7'>"+"Name:"+"</div><div class='col-sm-4'>Cost</div>";
 	
 	
 		
-		//得出菜单
+//得出菜单
 	var menuDish= model.getFullMenu();
 	
-	//输出菜单
+//输出菜单
 	menuDish.forEach(function(item,index){
 		
 	  	var priceForSingle= model.getPriceForDish(item.id);
@@ -36,19 +41,35 @@ var SideNavView = function (container, model) {
 		
 	});
 
-	//Bug 总价undefined
-	//输出总价 
-	var totalPriceForMenu=model.getTotalMenuPrice();
-	html+="<div class='col-sm-7'>"+"Total:"+"</div><div class='col-sm-4'> "+totalPriceForMenu+" SEK</div>";
+//pending Dish
+	var pendingID=model.getPendingID();
+	html+="<div class='col-sm-7'>Pending</div>";
 
+	if(pendingID!=0){
+		var pendingDish=model.getDish(pendingID);
+		var priceForPending= model.getPriceForDish(pendingID);
+		var priceForPendingAll=priceForPending*model.getNumberOfGuests();
+	
+		html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div>";
+		var totalPriceForMenu=model.getTotalMenuPrice()+priceForPendingAll;
+		
+	}else{
+		html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div>";
+		var totalPriceForMenu=model.getTotalMenuPrice();
+		}
+	
+//输出总价 
+	html+="<div class='col-sm-7'>"+"Total:"+"</div><div class='col-sm-4'> "+totalPriceForMenu+" SEK</div>";
+	
 	this.PriceTable.html(html);
 
-	
+
+
 
 	this.update= function(obj){
 		//改变人数
  		this.numberOfGuests.html(model.getNumberOfGuests());
- 		if(obj=="num"||obj=="dishChange"){
+ 		if(obj=="num"||obj=="dishChange" ||obj=="pendingChange"){
 			//输出标题
 			var html="";
 			html+="<div class='col-sm-7'>"+"Name:"+"</div><div class='col-sm-4'>Cost</div>";
@@ -67,11 +88,28 @@ var SideNavView = function (container, model) {
 		
 			});
 
-			//Bug 总价undefined
-			//输出总价 
-			var totalPriceForMenu=model.getTotalMenuPrice();
-			html+="<div class='col-sm-7'>"+"Total:"+"</div><div class='col-sm-4'> "+totalPriceForMenu+" SEK</div>";
+			var pendingID=model.getPendingID();
+			html+="<div class='col-sm-7'>Pending</div>";
 
+			if(pendingID!=0){
+				var pendingDish=model.getDish(pendingID);
+				var priceForPending= model.getPriceForDish(pendingID);
+				var priceForPendingAll=priceForPending*model.getNumberOfGuests();
+			
+				html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div>";
+				var totalPriceForMenu=model.getTotalMenuPrice()+priceForPendingAll;
+				
+			}else{
+				html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div>";
+				var totalPriceForMenu=model.getTotalMenuPrice();
+				}
+			
+
+			
+		
+			//输出总价 
+			html+="<div class='col-sm-7'>"+"Total:"+"</div><div class='col-sm-4'> "+totalPriceForMenu+" SEK</div>";
+			
 			this.PriceTable.html(html);
 
  		}
@@ -81,7 +119,7 @@ var SideNavView = function (container, model) {
  				
 		
  	}
- 	this.update();
+ 	
  	
  	
  }

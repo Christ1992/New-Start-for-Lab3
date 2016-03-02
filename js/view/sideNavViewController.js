@@ -17,6 +17,7 @@ var SideNavViewController = function (view, model) {
 
 	view.confirmDinnerButton.click(function(){
 		model.setMenuReady();
+		model.setPendingID(0);
 		$("#SecondPage").css('display','none');
 		$("#topBar").css('display','block');
 		$("#dinnerOverview").css('display','block');

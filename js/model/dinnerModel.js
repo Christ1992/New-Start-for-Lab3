@@ -9,6 +9,7 @@ var DinnerModel = function() {
 	var Type=0;
 	var Filter=null;
 	var DetailID=0;
+	var pendingID=0;
 
 
 
@@ -26,6 +27,15 @@ var DinnerModel = function() {
 	
 	} ;
 	
+	this.setPendingID = function(id){
+		
+		pendingID=id;
+		notifyObservers("pendingChange");
+	};
+
+	this.getPendingID = function(){
+		return pendingID;
+	}
 
 
 //筛选功能
@@ -272,7 +282,7 @@ var DinnerModel = function() {
 			},{
 			'name':'white bread',
 			'quantity':2,
-			'unit':'slices',
+			'unit':'st',
 			'price':2
 			}]
 		},{
@@ -348,7 +358,7 @@ var DinnerModel = function() {
 			},{
 			'name':'white bread',
 			'quantity':2,
-			'unit':'slices',
+			'unit':'st',
 			'price':2
 			}]
 		},{

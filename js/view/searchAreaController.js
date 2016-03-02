@@ -20,23 +20,10 @@ var SearchAreaController = function (view, model) {
 		 var imgID=$(this).attr("id");
 		 console.log("imgID= "+imgID);
 		 model.setDetailID(imgID);
-
+		 model.setPendingID(imgID);
 		  		$("#searchArea").css('display','none');
 		  		$("#detailView").css('display','block');
     });
 	
-	//view.images.on('click',function(){
-           
-
-/*
-	$(document).on('click','img',function(){
-
-		var imgID=view.images.attr("id");
-		console.log(imgID);
-		model.setDetailID(imgID);
-
-  		$("#searchArea").css('display','none');
-  		$("#detailView").css('display','block');
-
-	});*/
+	
 }
