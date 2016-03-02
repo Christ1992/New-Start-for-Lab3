@@ -24,7 +24,7 @@ var SideNavView = function (container, model) {
 
 //输出标题
 	var html="";
-	html+="<div class='col-sm-7'>"+"Name:"+"</div><div class='col-sm-4'>Cost</div>";
+	html+="<div class='col-md-7'>"+"Name:"+"</div><div class='col-md-4'>Cost</div>";
 	
 	
 		
@@ -37,29 +37,29 @@ var SideNavView = function (container, model) {
 	  	var priceForSingle= model.getPriceForDish(item.id);
 	  	
 	  	var priceForAllPeople=priceForSingle*model.getNumberOfGuests();
-	  	html+="<div class='col-sm-7'>"+item.name+"</div><div class='col-sm-3'>"+priceForAllPeople +"</div><div class='col-sm-1'><img id='"+item.id+"'src='remove.png'></div>";
+	  	html+="<div class='col-md-7'>"+item.name+"</div><div class='col-md-3'>"+priceForAllPeople +"</div><div class='col-md-1'><img id='"+item.id+"'src='remove.png'></div>";
 		
 	});
 
 //pending Dish
 	var pendingID=model.getPendingID();
-	html+="<div class='col-sm-7'>Pending</div>";
+	html+="<div class='col-md-7'>Pending</div>";
 
 	if(pendingID!=0){
 		var pendingDish=model.getDish(pendingID);
 		var priceForPending= model.getPriceForDish(pendingID);
 		var priceForPendingAll=priceForPending*model.getNumberOfGuests();
 	
-		html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div>";
+		html+="<div class='col-md-3'>"+priceForPendingAll+"</div><div class='col-md-1'></div>";
 		var totalPriceForMenu=model.getTotalMenuPrice()+priceForPendingAll;
 		
 	}else{
-		html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div>";
+		html+="<div class='col-md-3'>0</div><div class='col-md-1'></div>";
 		var totalPriceForMenu=model.getTotalMenuPrice();
 		}
 	
 //输出总价 
-	html+="<div class='col-sm-7'>"+"Total:"+"</div><div class='col-sm-4'> "+totalPriceForMenu+" SEK</div>";
+	html+="<div class='col-md-7'>"+"Total:"+"</div><div class='col-md-4'> "+totalPriceForMenu+" SEK</div>";
 	
 	this.PriceTable.html(html);
 
@@ -72,7 +72,7 @@ var SideNavView = function (container, model) {
  		if(obj=="num"||obj=="dishChange" ||obj=="pendingChange"){
 			//输出标题
 			var html="";
-			html+="<div class='col-sm-7'>"+"Name:"+"</div><div class='col-sm-4'>Cost</div>";
+			html+="<div class='col-md-7'>"+"Name:"+"</div><div class='col-md-4'>Cost</div>";
 
 	 		
 	 		//得出菜单
@@ -84,23 +84,23 @@ var SideNavView = function (container, model) {
 			  	var priceForSingle= model.getPriceForDish(item.id);
 			  	
 			  	var priceForAllPeople=priceForSingle*model.getNumberOfGuests();
-			  	html+="<div class='col-sm-7'>"+item.name+"</div><div class='col-sm-3'>"+priceForAllPeople +"</div><div class='col-sm-1'><img id='"+item.id+"'src='remove.png'></div>";
+			  	html+="<div class='col-md-7'>"+item.name+"</div><div class='col-md-3'>"+priceForAllPeople +"</div><div class='col-md-1'><img id='"+item.id+"'src='remove.png'></div>";
 		
 			});
 
 			var pendingID=model.getPendingID();
-			html+="<div class='col-sm-7'>Pending</div>";
+			html+="<div class='col-md-7'>Pending</div>";
 
 			if(pendingID!=0){
 				var pendingDish=model.getDish(pendingID);
 				var priceForPending= model.getPriceForDish(pendingID);
 				var priceForPendingAll=priceForPending*model.getNumberOfGuests();
 			
-				html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div>";
+				html+="<div class='col-md-3'>"+priceForPendingAll+"</div><div class='col-md-1'></div>";
 				var totalPriceForMenu=model.getTotalMenuPrice()+priceForPendingAll;
 				
 			}else{
-				html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div>";
+				html+="<div class='col-md-3'>0</div><div class='col-md-1'></div>";
 				var totalPriceForMenu=model.getTotalMenuPrice();
 				}
 			
@@ -108,7 +108,7 @@ var SideNavView = function (container, model) {
 			
 		
 			//输出总价 
-			html+="<div class='col-sm-7'>"+"Total:"+"</div><div class='col-sm-4'> "+totalPriceForMenu+" SEK</div>";
+			html+="<div class='col-md-7'>"+"Total:"+"</div><div class='col-md-4'> "+totalPriceForMenu+" SEK</div>";
 			
 			this.PriceTable.html(html);
 
