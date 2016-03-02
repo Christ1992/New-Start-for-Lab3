@@ -1,15 +1,13 @@
 #inputKeyword{
 	width: 100%;
-<<<<<<< HEAD
+
 }
 .paddingRightNone{
 	padding-right: 0px;
 }
 .paddingLeftNone{
 	padding-right: 0px;
-=======
-	margin-right: 0px;
->>>>>>> origin/master
+
 }
 .toolButton{
 	text-align:center;
@@ -127,13 +125,9 @@ h1{
 }
 
 
-<<<<<<< HEAD
+
 #Heading{
-	
-=======
-#PriceTable{
-	height: 100%;
->>>>>>> origin/master
+
 	background-color: #ffcc99;
 	font-size: 16px;
 }
@@ -202,7 +196,7 @@ select{
 	text-align:center; padding: 5px; border-bottom:2px solid black;
 }
 #Ingredient{
-<<<<<<< HEAD
+
 	border:2px solid black;
 	background:#FFFFCC;
 	
@@ -267,72 +261,7 @@ select{
 
 			border-bottom: 2px solid black;
 		}
-=======
-	border:2px solid black; background:#FFFFCC;
-	height: 100%;
-}
-#ingredientTable{
-	height: 100%;
-}
 
-
-.table1 {
-height: 80px;/*高度值不能少*/
-width: 400px;/*宽度值不能少*/
-display: table;
-position: relative;
-float:left;
-background:#FFFFCC;
-
-}		
-.table2 {
-height: 80px;/*高度值不能少*/
-width: 400px;/*宽度值不能少*/
-display: table;
-position: relative;
-float:right;
-background:#FFFFCC
-}		
-.tableCell {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;			
-	padding: 10px;
-	*position: absolute;
-	*top: 50%;
-	*left: 50%;
-}
-.content {
-	*position:relative;
-	*top: -50%;
-	*left: -50%;
-}
-#summaryHeading{
-	height:100px;
-	background-color:#FFFFCC;
-	border-bottom:2px solid black;
-	padding: 0px;
-	margin:0px;
-}
-.RightAlign{
-	float: right;
-}
-.borderRight{
-	border-right: 2px solid black;
-}
-.borderAll{
-	border: 2px solid black;
-}
-.floatMiddle{
-	text-align: center;
-}
-.padding{
-	padding-top: 20px;
-	padding-bottom: 20px;
-
-	border-bottom: 2px solid black;
-}
->>>>>>> origin/master
 
 #firstbutton{
 	height:30px;
