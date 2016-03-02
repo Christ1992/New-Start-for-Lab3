@@ -5,8 +5,8 @@ var DetailViewController = function (view,model) {
 	//view.backToSelect.on('click',function(){
 	view.backToSelect.click(function(){
 		model.setPendingID(0);
-		$("#searchArea").css('display','none');
-		$("#detailView").css('display','block');
+		$("#searchArea").css('display','block');
+		$("#detailView").css('display','none');
 	});
 
 	view.confirmDish.click(function(){
@@ -16,8 +16,8 @@ var DetailViewController = function (view,model) {
 
 
 
-		$("#searchArea").css('display','none');
-		$("#detailView").css('display','block');
+		$("#searchArea").css('display','block');
+		$("#detailView").css('display','none');
 	});
 
 
