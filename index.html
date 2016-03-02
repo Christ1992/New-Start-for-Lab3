@@ -84,10 +84,14 @@
                     <h2>Select Dish</h2>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <form name="what">
                             <input type="text" id="inputKeyword">
-                            <div id="searchButton">search</div>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="toolButton" id="searchButton">search
+                            </div>
                         </div>
                         
                         <div class="col-sm-8">
@@ -122,7 +126,11 @@
                             <p>djldjlf jljelj ljbekl jla;lheoim n kaldn khsnekj bsikebjghabjg ,hgdn len lsneu nknalble kjndbkie nks ksjh tmecje j sem j mslem ks. jdjldjlf jljelj ljbekl jla;lheoim n kaldn khsnekj bsikebjghabjg ,hgdn len lsneu nknalble kjndbkie nks ksjh tmecje j sem j mslem ks</p>
                             <br>
                         </div>
-                        <div id="backToSelect">Back to Select Dish</div>
+                        <div class="row">
+                            <div class="col-sm-4 toolButton" id="backToSelect">Back to Select Dish</div>
+                        </div>
+                        
+                        
                     </div>
                     
                     <div class="col-sm-6" id="Ingredient">
@@ -138,7 +146,8 @@
                         </div>
                         <hr>
                         <div class="row" style="width:100%">
-                            <div class="col-sm-7" id="confirmDish">Confirm Dish
+                            <div class="col-sm-7">
+                                <div class="toolButton "id="confirmDish">Confirm Dish</div>
                             </div>
                             <div style="text-align: right;"class="col-sm-3">SEK
                             </div>
@@ -170,7 +179,8 @@
         </div>
         <div class="table2" id="table2">
             <div class="tableCell">
-                <div class="content" id="editMenu">Go back and edit menu
+                <div class="content">
+                    <div class="bigButton" id="editMenu">Go back and edit menu</div>
                 </div>
             </div>
         </div>
@@ -206,8 +216,13 @@
           </div>
       </div>
       <hr>
-      <div class="floatMiddle" id="printButton" class="">Print Full Recipe
-      </div>
+        <div class="row" >
+            <div class="col-md-4"></div>
+            <div class="col-md-4"><div id="printButton">Print Full Recipe
+                </div></div>
+            <div class="col-md-4"></div>
+          
+        </div>
     </div>
 
     
@@ -258,6 +273,8 @@
     <!-- The application JavaScript code -->
      <script src="./js/app.js"></script>
     <script src="./js/model/dinnerModel.js"></script>
+    
+    <script src="./js/view/interaction.js"></script>
     
     <script src="./js/view/firstView.js"></script>
     <script src="./js/view/firstViewController.js"></script>
