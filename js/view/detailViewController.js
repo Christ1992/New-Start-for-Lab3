@@ -1,4 +1,3 @@
-//Bug. 跳转
 
 var DetailViewController = function (view,model) {
 	//$(document).on('click','#backToSelect',function(){

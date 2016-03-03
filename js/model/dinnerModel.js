@@ -13,7 +13,7 @@ var DinnerModel = function() {
 	var Filter=null;
 	var DetailID=0;
 	var pendingID=0;
-	var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
+	var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
 
 
 //搜索id获得ingredient，每个的数量即为价格
@@ -219,7 +219,7 @@ var DinnerModel = function() {
 			
 		}
 
-		return dishPrice;
+		return parseFloat(dishPrice.toFixed(2));
 
     };
 

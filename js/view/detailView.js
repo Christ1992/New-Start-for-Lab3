@@ -24,10 +24,10 @@ var DetailView = function (container, model) {
 				var preHtml="";
 		
 				for (i = 0; i < dishIngredients.length; i++) { 
-				ingredientHtml += "<div class='row'><div class='col-md-1'> </div><div class='col-md-2'>"+dishIngredients[i].Quantity*numberOfGuests+" "+dishIngredients[i].Unit
+				ingredientHtml += "<div class='row'><div class='col-md-1'> </div><div class='col-md-2'>"+dishIngredients[i].Quantity.toFixed(2)*numberOfGuests+" "+dishIngredients[i].Unit
 									+"</div><div class='col-md-6'>"+dishIngredients[i].Name
 									+"</div><div class='col-md-1'>SEK</div><div class='col-md-2'>"
-									+dishIngredients[i].Quantity*numberOfGuests+"</div></div>";
+									+dishIngredients[i].Quantity.toFixed(2)*numberOfGuests+"</div></div>";
 		
 		   		}
 		   		dishHtml="<h2>"+detailDish.Title+"</h2><img src='"
@@ -52,10 +52,10 @@ var DetailView = function (container, model) {
 				var dishHtml="";
 		
 				for (i = 0; i < dishFixIngredients.length; i++) { 
-				ingredientHtml += "<div class='row'><div class='col-md-1'> </div><div class='col-md-2'>"+dishFixIngredients[i].Quantity*numberOfGuests+" "+dishFixIngredients[i].Unit
+				ingredientHtml += "<div class='row'><div class='col-md-1'> </div><div class='col-md-2'>"+dishFixIngredients[i].Quantity.toFixed(2)*numberOfGuests+" "+dishFixIngredients[i].Unit
 									+"</div><div class='col-md-6'>"+dishFixIngredients[i].Name
 									+"</div><div class='col-md-1'>SEK</div><div class='col-md-2'>"
-									+dishFixIngredients[i].Quantity*numberOfGuests+"</div></div>";
+									+dishFixIngredients[i].Quantity.toFixed(2)*numberOfGuests+"</div></div>";
 		
 		   		}
 

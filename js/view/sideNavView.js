@@ -49,14 +49,16 @@ var SideNavView = function (container, model) {
 				console.log("pendDish"+pendingDish);
 				var priceForPending= model.getPriceForDish(pendingDish);
 				var priceForPendingAll=priceForPending*model.getNumberOfGuests();
-			
-				html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div></div>";
-				var totalPriceForMenu=model.getTotalMenuPrice()+priceForPendingAll;
+				var price=priceForPendingAll.toFixed(2);
+
+				html+="<div class='col-sm-3'>"+price+"</div><div class='col-sm-1'></div></div>";
+				var totalPriceForMenu=model.getTotalMenuPrice()+price;
 				
 			}else{
 				html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div></div>";
-				var totalPriceForMenu=model.getTotalMenuPrice();
+				totalPriceForMenu=model.getTotalMenuPrice();
 			}
+			
 			
 
 			
@@ -71,10 +73,12 @@ var SideNavView = function (container, model) {
 
 
 	this.update= function(obj){
+
+ 		if(obj=="num"||obj=="dishChange" ||obj=="pendingChange"){
 		//改变人数
  		this.numberOfGuests.html(model.getNumberOfGuests());
- 		if(obj=="num"||obj=="dishChange" ||obj=="pendingChange"){
-			//输出标题
+
+ 		//输出标题
 			var html="";
 
 			html+="<div class='row' id='Heading'><div class='col-sm-7'>Name:</div><div class='col-sm-4'>Cost:</div></div>";
@@ -102,10 +106,10 @@ var SideNavView = function (container, model) {
 				var pendingDish=model.getDish(pendingID);
 				var priceForPending= model.getPriceForDish(pendingDish);
 				var priceForPendingAll=priceForPending*model.getNumberOfGuests();
-			
+				var price=priceForPendingAll.toFixed(2);
 
-				html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div></div>";
-				var totalPriceForMenu=model.getTotalMenuPrice()+priceForPendingAll;
+				html+="<div class='col-sm-3'>"+price+"</div><div class='col-sm-1'></div></div>";
+				var totalPriceForMenu=parseFloat(price)+model.getTotalMenuPrice();
 				
 			}else{
 				html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div></div>";
