@@ -9,8 +9,6 @@ $(function() {
 	
 	var sideNavView = new SideNavView($("#sideNavView"), model);
 	var sideNavViewController = new SideNavViewController(sideNavView,model);
-	var searchArea = new SearchArea($("#searchArea"), model);
-	var searchAreaController = new SearchAreaController(searchArea,model);
 	var detailView = new DetailView($("#detailView"), model);
 	var detailViewController = new DetailViewController(detailView,model);
 	var topBar= new TopBar($("#topBar"),model);
@@ -19,6 +17,8 @@ $(function() {
 	var dinnerOverviewController = new DinnerOverviewController(dinnerOverview,model);
  	var dinnerPreparation= new DinnerPreparation($("#dinnerPreparation"),model);
 	var dinnerPreparationController = new DinnerPreparationController(dinnerPreparation,model);
- 	
+ 	var searchArea = new SearchArea($("#searchArea"), model);
+	var searchAreaController = new SearchAreaController(searchArea,model);
+	
 
 });

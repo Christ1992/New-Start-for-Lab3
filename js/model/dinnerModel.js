@@ -5,15 +5,102 @@ var DinnerModel = function() {
 	// and selected dinner options for dinner menu
 	var observers=[];
 	var numberOfGuests=1;
-	var menuID = [{'type':'starter','id': 0},{'type':'main dish','id': 102},{'type':'dessert','id': 0}];
-	var Type=0;
+	var menuID = [{'Category':'Appetizers','id': 0},{'Category':'Main Dish','id': 0},{'Category':'Desserts','id': 0}];
+	//any_kw=main+dish
+	//any_kw=appetizers
+	//any_kw=dessert
+	var Type="appetizers";
 	var Filter=null;
 	var DetailID=0;
 	var pendingID=0;
+	var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
 
 
+//搜索id获得ingredient，每个的数量即为价格
 
 
+//筛选功能---要改
+
+	this.setSearchType = function(type){
+		Type=type;
+		
+		
+		notifyObservers("changeOption");
+	}
+	this.getSearchType=function(){
+		return Type;
+	}
+
+	this.setSearchFilter= function(fil){
+		Filter=fil;
+
+		
+		notifyObservers("changeOption");
+	}
+	this.getSearchFilter=function(){
+		return Filter;
+	}
+
+//通过id搜索dish 的 数组，已改
+	this.getDish = function (id) {
+	var url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
+	var result='';
+	$.ajax({
+	         type: "GET",
+	         dataType: 'json',
+	         async: false,
+	         url: url,
+	         success: function (data) {
+	            
+	            //alert('success');
+	             result=data;
+	            console.log("计数君");
+	            }
+	         });
+	 return result;
+	}
+	//返回所有菜（0）或是返回根据type和filter筛选过的菜,要改
+	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
+	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
+	//if you don't pass any filter all the dishes will be returned
+	this.getAllDishes = function (type,filter) {
+		if(filter==undefined){
+			var url = "http://api.bigoven.com/recipes?pg=1&rpp=10&any_kw="
+                  + type 
+                  + "&api_key="+apiKey;
+                  console.log("jinlaile1= "+url);
+        }else{
+            var url="http://api.bigoven.com/recipes?pg=1&rpp=10&any_kw="
+                  + type+"+"+filter
+                  + "&api_key="+apiKey;
+                  console.log("jinlaile2 " +url)
+        }
+        var result='';
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            async: false,
+            url: url,
+            success: function (data) {
+                //alert('success');
+                
+                result=data.Results;
+                
+                
+            }
+        });
+        return result;
+	
+	}
+
+	this.setSecondPageReady=function(){
+		notifyObservers("secondPageReady");
+	}
+	
+
+//其他的所有dish.XXXX要改, type改成Category
+
+//Observers
 	this.addObserver = function(observer) {
 		observers.push(observer);
 		
@@ -38,28 +125,7 @@ var DinnerModel = function() {
 	}
 
 
-//筛选功能
 
-	this.setSearchType = function(type){
-		Type=type;
-		
-		
-		notifyObservers("changeOption");
-	}
-	this.getSearchType=function(){
-		return Type;
-	}
-
-	this.setSearchFilter= function(fil){
-		Filter=fil;
-
-		//console.log("收到了2"+Filter);
-		notifyObservers("changeOption");
-	}
-	this.getSearchFilter=function(){
-		return Filter;
-	}
-	
 
 //页面切换
 	this.setMenuReady= function(){
@@ -100,17 +166,10 @@ var DinnerModel = function() {
 
 
 
-//通过id搜索dish 的 数组
-	this.getDish = function (id) {
-	  for(key in dishes){
-			if(dishes[key].id == id) {
-				return dishes[key];
-			}
-		}
-	}
+
 
 //返回menu上面的特定类型的dish  的 数组
-	this.getSelectedDish = function(type) {
+	/*this.getSelectedDish = function(type) {
 		for (key in menuID){
 			var dishType=menuID[key].type;
 			if(dishType == type){
@@ -118,7 +177,7 @@ var DinnerModel = function() {
 			}
 		}
 
-	}
+	}*/
 
 //返回所有menu上面的dish 的 数组
 	this.getFullMenu = function() {
@@ -135,28 +194,28 @@ var DinnerModel = function() {
 		return allDishes;
 	}
 
-//返回所有所有menu上面dish的成分 的 数组
+//返回所有所有menu上面dish的成分 的 数组, 已改
 	this.getAllIngredients = function() {
 		var allIngredients = [];
 
 		for(key in menuID){
 			var dish = this.getDish(menuID[key].id);
-			var ingredients = dish.ingredients;
+			var ingredients = dish.Ingredients;
 			allIngredients.push(ingredients);
 		}
 		return allIngredients;
 	}
 
-//通过菜的id  返回  总价格
-	this.getPriceForDish = function(id) {
+//通过菜的id  返回  总价格，已改为根据菜的数组 返回价格
+	this.getPriceForDish = function(data) {
         var dishPrice = 0;
-		var dish = this.getDish(id);
 		
-		var dishIngredients = dish.ingredients;
+		
+		var dishIngredients = data.Ingredients;
 		
 		for(key in dishIngredients){
 			
-			dishPrice += dishIngredients[key].price;
+			dishPrice += dishIngredients[key].Quantity;
 			
 		}
 
@@ -172,7 +231,7 @@ var DinnerModel = function() {
 		
 		for (key in dish){
 			
-			totalPrice += this.getPriceForDish(dish[key].id);
+			totalPrice += this.getPriceForDish(dish[key]);
 			
 		}
 		totalPrice = totalPrice*this.getNumberOfGuests();
@@ -187,12 +246,12 @@ var DinnerModel = function() {
 		var dish = this.getDish(id);
 
 		for(key in menuID){	
-			if(menuID[key].type==dish.type){
+			if(menuID[key].Category==dish.Category){
 				
-					menuID[key].id=dish.id;
+					menuID[key].id=dish.RecipeID;
 			}
 		}
-		console.log(menuID);
+		
 		notifyObservers("dishChange");
 	}
 
@@ -211,37 +270,7 @@ var DinnerModel = function() {
 		//TODO Lab 2 
 	}
 
-//返回所有菜（0）或是返回根据type和filter筛选过的菜
-	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
-	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
-	//if you don't pass any filter all the dishes will be returned
-	this.getAllDishes = function (type,filter) {
-		
-		return $(dishes).filter(function(index,dish) {
-		var found = true;
-		if(filter){
 
-			found = false;
-			$.each(dish.ingredients,function(index,ingredient) {
-				if(ingredient.name.indexOf(filter)!=-1) {
-					found = true;
-				}
-			});
-			if(dish.name.indexOf(filter) != -1)
-			{
-				found = true;
-			}
-		}
-		
-		if(type==0){
-				
-				return dish && found;
-		}else{	  
-				
-				return dish.type == type && found;	
-			}
-	  });	
-	}
 		
 }
 

@@ -59,6 +59,12 @@ body
 	background-size: cover;
 }
 
+img{
+	height: 140px;
+	width: 140px;
+	background-size: cover;
+}
+
 #subtitle{vertical-align:bottom;font-size: 40%;font-style: italic;}
 #SecondPage{
 	background-color: white;
@@ -89,10 +95,9 @@ body
 .removeButton{
     width: 16px;
     height: 16px;
-	background-image:url('remove.png');
-	background-color: white;
+    background-size: cover;
 	margin-left:5px;
-  border:none;
+  	border:none;
 }
 
 /*details*/

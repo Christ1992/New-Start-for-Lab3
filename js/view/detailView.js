@@ -4,40 +4,66 @@ var DetailView = function (container, model) {
 	
 
 	model.addObserver(this);
-
+	var dishFix='';
 	this.update=function(obj){
-		if(obj=="num" || obj=="detail"){
+		
+		if(obj=="detail"){
 			var DetailID=model.getDetailID();
 			console.log("DetailID+"+DetailID);
 			if(DetailID!=0){
 				var detailDish= model.getDish(DetailID);
 				console.log("detailDish+"+detailDish);
-				var dishIngredients=detailDish.ingredients;
-				var totalPrice=model.getPriceForDish(DetailID);
+				dishFix=detailDish;
+				var dishIngredients=detailDish.Ingredients;
+				var totalPrice=model.getPriceForDish(detailDish);
+		
+				var numberOfGuests=model.getNumberOfGuests();
+		
+				var ingredientHtml = "";
+				var dishHtml="";
+				var preHtml="";
+		
+				for (i = 0; i < dishIngredients.length; i++) { 
+				ingredientHtml += "<div class='row'><div class='col-md-1'> </div><div class='col-md-2'>"+dishIngredients[i].Quantity*numberOfGuests+" "+dishIngredients[i].Unit
+									+"</div><div class='col-md-6'>"+dishIngredients[i].Name
+									+"</div><div class='col-md-1'>SEK</div><div class='col-md-2'>"
+									+dishIngredients[i].Quantity*numberOfGuests+"</div></div>";
+		
+		   		}
+		   		dishHtml="<h2>"+detailDish.Title+"</h2><img src='"
+		   			+detailDish.ImageURL+"'><p>"
+		   			+detailDish.Description
+		   			+"</p><br>";
+		   		preHtml="<h1>PREPARATION</h1><p>"+detailDish.Instructions+"</p>"
+
+			    $("#dishPortion").html("INGREDIENTS FOR "+numberOfGuests+"  People");
+			    $("#detailDish").html(dishHtml);
+				$("#ingredientTable").html(ingredientHtml);
+				$("#ingredientTotal").html(totalPrice*numberOfGuests);	
+				$("#preparation").html(preHtml);
+			}
+		}else if(obj=="num"){
+			var dishFixIngredients=dishFix.Ingredients;
+			var totalPrice=model.getPriceForDish(dishFix);
 		
 				var numberOfGuests=model.getNumberOfGuests();
 		
 				var ingredientHtml = "";
 				var dishHtml="";
 		
-				for (i = 0; i < dishIngredients.length; i++) { 
-				ingredientHtml += "<div class='col-md-2'>"+dishIngredients[i].quantity*numberOfGuests+" "+dishIngredients[i].unit
-									+"</div><div class='col-md-6'>"+dishIngredients[i].name
-									+"</div><div class='col-md-2'>SEK</div><div class='col-md-2'>"
-									+dishIngredients[i].price*numberOfGuests+"</div>";
+				for (i = 0; i < dishFixIngredients.length; i++) { 
+				ingredientHtml += "<div class='row'><div class='col-md-1'> </div><div class='col-md-2'>"+dishFixIngredients[i].Quantity*numberOfGuests+" "+dishFixIngredients[i].Unit
+									+"</div><div class='col-md-6'>"+dishFixIngredients[i].Name
+									+"</div><div class='col-md-1'>SEK</div><div class='col-md-2'>"
+									+dishFixIngredients[i].Quantity*numberOfGuests+"</div></div>";
 		
 		   		}
-		   		dishHtml="<h2>"+detailDish.name+"</h2><img src='./images/"
-		   			+detailDish.image+"'><p>"
-		   			+detailDish.description
-		   			+"</p><br>";
 
 
 			    $("#dishPortion").html("INGREDIENTS FOR "+numberOfGuests+"  People");
-			    $("#detailDish").html(dishHtml);
 				$("#ingredientTable").html(ingredientHtml);
-				$("#ingredientTotal").html(totalPrice*numberOfGuests);	
-			}
+				$("#ingredientTotal").html(totalPrice*numberOfGuests);
+
 		}
 	}
 

@@ -33,10 +33,10 @@ var SideNavView = function (container, model) {
 			//输出菜单
 			menuDish.forEach(function(item,index){
 				
-			  	var priceForSingle= model.getPriceForDish(item.id);
+			  	var priceForSingle= model.getPriceForDish(item.RecipeID);
 			  	
 			  	var priceForAllPeople=priceForSingle*model.getNumberOfGuests();
-			  	html+="<div class='row'><div class='col-sm-7'>"+item.name+"</div><div class='col-sm-3'>"+priceForAllPeople +"</div><div class='col-sm-1'><img id='"+item.id+"'src='remove.png'></div></div>";
+			  	html+="<div class='row'><div class='col-sm-7'>"+item.Title+"</div><div class='col-sm-3'>"+priceForAllPeople +"</div><div class='col-sm-1'><img class='removeButton' id='"+item.RecipeID+"'src='remove.png'></div></div>";
 
 			});
 
@@ -46,7 +46,8 @@ var SideNavView = function (container, model) {
 
 			if(pendingID!=0){
 				var pendingDish=model.getDish(pendingID);
-				var priceForPending= model.getPriceForDish(pendingID);
+				console.log("pendDish"+pendingDish);
+				var priceForPending= model.getPriceForDish(pendingDish);
 				var priceForPendingAll=priceForPending*model.getNumberOfGuests();
 			
 				html+="<div class='col-sm-3'>"+priceForPendingAll+"</div><div class='col-sm-1'></div></div>";
@@ -86,11 +87,10 @@ var SideNavView = function (container, model) {
 			//输出菜单
 			menuDish.forEach(function(item,index){
 				
-			  	var priceForSingle= model.getPriceForDish(item.id);
+			  	var priceForSingle= model.getPriceForDish(item);
 			  	
 			  	var priceForAllPeople=priceForSingle*model.getNumberOfGuests();
-
-			  	html+="<div class='row'><div class='col-sm-7'>"+item.name+"</div><div class='col-sm-3'>"+priceForAllPeople +"</div><div class='col-sm-1'><img id='"+item.id+"'src='remove.png'></div></div>";
+			  	html+="<div class='row'><div class='col-sm-7'>"+item.Title+"</div><div class='col-sm-3'>"+priceForAllPeople +"</div><div class='col-sm-1'><img class='removeButton' id='"+item.RecipeID+"'src='remove.png'></div></div>";
 
 			});
 
@@ -100,7 +100,7 @@ var SideNavView = function (container, model) {
 
 			if(pendingID!=0){
 				var pendingDish=model.getDish(pendingID);
-				var priceForPending= model.getPriceForDish(pendingID);
+				var priceForPending= model.getPriceForDish(pendingDish);
 				var priceForPendingAll=priceForPending*model.getNumberOfGuests();
 			
 
@@ -109,8 +109,8 @@ var SideNavView = function (container, model) {
 				
 			}else{
 				html+="<div class='col-sm-3'>0</div><div class='col-sm-1'></div></div>";
-alPriceForMenu=model.getTotalMenuPrice();
-				}
+				totalPriceForMenu=model.getTotalMenuPrice();
+			}
 			
 
 			

@@ -14,9 +14,9 @@ var DinnerOverview = function (container, model) {
 			var html = "";
 	   
 			for (i = 0; i < newDishes.length; i++) { 
-				html += "<div class='floating-box2 RightAlign' ><div><img class='borderAll' src='./images/"+newDishes[i].image
-						+"' alt='"+newDishes[i].name+"'></div><div class='textMiddle'>"+newDishes[i].name
-						+"</div><div class='RightAlign' style='padding: 5px;'>"+model.getPriceForDish(newDishes[i].id)+" SEK</div></div>"; 
+				html += "<div class='floating-box2 RightAlign' ><div><img class='borderAll' src='"+newDishes[i].ImageURL
+						+"' alt='"+newDishes[i].Title+"'></div><div class='textMiddle'>"+newDishes[i].Title
+						+"</div><div class='RightAlign' style='padding: 5px;'>"+model.getPriceForDish(newDishes[i])+" SEK</div></div>"; 
 	       //console.log("TotalPrice for"+newDishes[i].name+"="+model.getPriceForDish(newDishes[i]));               
 	    	}
 		
