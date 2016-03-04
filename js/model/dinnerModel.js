@@ -13,7 +13,7 @@ var DinnerModel = function() {
 	var Filter=null;
 	var DetailID=0;
 	var pendingID=0;
-	var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
+	var apiKey = "d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1";
 
 
 //搜索id获得ingredient，每个的数量即为价格
@@ -44,7 +44,7 @@ var DinnerModel = function() {
 //通过id搜索dish 的 数组，已改
 	this.getDish = function (id) {
 	var url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
-	var result='';
+	var result2='';
 	$.ajax({
 	         type: "GET",
 	         dataType: 'json',
@@ -53,16 +53,24 @@ var DinnerModel = function() {
 	         success: function (data) {
 	            
 	            //alert('success');
-	             result=data;
-	            console.log("计数君");
-	            }
+	            result2=data;
+	            console.log(result2);
+	            
+	            },
+	        error: function(){ 
+	            
+	            alert('Please Check the Internet connection or change the API-key.');
+	            console.log("error"); 
+	          }
 	         });
-	 return result;
+		return result2;
+	 
 	}
 	//返回所有菜（0）或是返回根据type和filter筛选过的菜,要改
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
 	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
 	//if you don't pass any filter all the dishes will be returned
+	var result='';
 	this.getAllDishes = function (type,filter) {
 		if(filter==undefined){
 			var url = "http://api.bigoven.com/recipes?pg=1&rpp=10&any_kw="
@@ -75,24 +83,42 @@ var DinnerModel = function() {
                   + "&api_key="+apiKey;
                   console.log("jinlaile2 " +url)
         }
-        var result='';
+        
         $.ajax({
             type: "GET",
             dataType: 'json',
-            async: false,
+            cache: true,
             url: url,
             success: function (data) {
                 //alert('success');
                 
                 result=data.Results;
                 
+                notifyObservers("dataReady");
+
                 
-            }
+            },
+                
+            error: function(){ 
+	            
+	            alert('Please Check the Internet connection or change the API-key.');
+	             console.log("error"); 
+	          }
+	           
+            
         });
-        return result;
+    
+        
 	
 	}
 
+	this.getResult=function(){
+    	return result;
+    }
+	this.setLoadingPage=function(){
+		notifyObservers("loadingPageReady");
+	}
+	
 	this.setSecondPageReady=function(){
 		notifyObservers("secondPageReady");
 	}
