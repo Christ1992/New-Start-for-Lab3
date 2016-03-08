@@ -1,0 +1,57 @@
+<!-- We include the sidebar as it is shared across two screens. -->
+<ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
+
+<!-- TODO in Lab 5: Display the dish information including image, Description, 
+Instructions, Ingredients and total cost. -->
+
+<div class="col-md-9" id="detailView" ng-init="getDish();">
+    <div class="row">
+        <div class="col-md-5" >
+            {{status}}
+            <div id="detailDish">
+                <h2>{{detailDish.Title}}</h2>
+                <img src='{{detailDish.ImageURL}}'>
+                <p>{{detailDish.Description}}</p>
+                <br>
+            </div>
+            <div class="row">
+                <a href="#/search" id="backToSelect" ng-click="setPendingID(0);">Back to Select Dish</a>
+                
+            </div>
+            
+            
+        </div>
+        
+        <div class="col-md-7" id="Ingredient">
+            <h3 id="dishPortion">INGREDIENTS FOR {{getNumberOfGuests()}} People</h3>
+            <div style="overflow: auto">
+                <div class="row" id="ingredientTable" ng-repeat="item in dishIngredients">
+                    <div class='row'>
+                        <div class='col-md-1'></div>
+                        <div class='col-md-2'>{{(item.Quantity*getNumberOfGuests()).toFixed(2) }}  {{ item.Unit}}</div>
+                        <div class='col-md-6'>{{item.Name}}</div>
+                        <div class='col-md-1'>SEK</div>
+                        <div class='col-md-2'>{{(item.Quantity*getNumberOfGuests()).toFixed(2)}}</div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="#/search" id="confirmDish" ng-click="addDishToMenu(detailDish)">Confirm Dish</a>
+                </div>
+                <div style="text-align: right;"class="col-md-3">SEK
+                </div>
+                <div style="text-align: right;border:1px solid black;" class="col-md-2 totalPrice" id="ingredientTotal">
+                {{totalPrice*getNumberOfGuests()}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="preparation" >
+        <h1>PREPARATION</h1>
+        <p>{{detailDish.Instructions}}</p>
+    </div>
+</div>
