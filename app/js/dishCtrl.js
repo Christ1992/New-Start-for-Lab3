@@ -5,6 +5,10 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
   $scope.pendingID = $routeParams.dishId;
   console.log($scope.pendingID);
   
+  $scope.setPendingID = function(){
+      Dinner.setPendingID($scope.pendingID);
+      console.log("pendingID:"+$scope.pendingID);
+    }
   //得到dish详情
     $scope.getDish=function(){
         $scope.status ="loading";
@@ -16,6 +20,7 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
 
             console.log($scope.getNumberOfGuests());
             $scope.detailDish=data;
+            console.log(data);
             //得到所有材料
             $scope.dishIngredients = data.Ingredients;
             console.log(data.Ingredients[0].Name);
@@ -28,15 +33,17 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
         });
     };
     //加入菜单
-    $scope.addDishToMenu = function(id){
-      Dinner.addDishToMenu(id);
-      Dinner.setPendingDish(0);
+    $scope.addDishToMenu = function(id,type){
+      Dinner.addDishToMenu(id,type);
+      Dinner.setPendingID(0);
+      console.log("pending=0");
     }
 
     
     //pending清零
-    $scope.setPendingID = function(id){
-      Dinner.setPendingDish(id);
+    
+    $scope.removeID = function(){
+      Dinner.setPendingID(0);
     }
 
     

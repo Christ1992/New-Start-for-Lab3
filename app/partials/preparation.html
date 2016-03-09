@@ -4,7 +4,7 @@
 <div class="container" id="dinnerPreparation">
     <div id="dinnerPre" ng-repeat="item in menuDish">
         <div class='row padding' >
-        	<div class='col-md-2'><img class='borderAll' src='{{item.ImageURL}}'></div>
+        	<div class='col-md-2'><img class='borderAll' ng-src='{{item.ImageURL}}'></div>
         	<div class='col-md-4'>
         		<h2>{{item.Title}}</h2>
         		<p>{{item.Description}}</p>

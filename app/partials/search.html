@@ -4,7 +4,8 @@
 <!-- TODO in Lab 5: Display the input box for search (you can ignore the type dropdown since BigOven does
 not support it in free version) and list all the dishes that match the search. -->
 
-<div class="col-md-9"id="searchArea" ng-init="search(query2)">
+<!-- <div class="col-md-9"id="searchArea" ng-init="query=getKeyword();query2=getType();search(query+'+'+query2)">-->
+    <div class="col-md-9"id="searchArea" ng-init="query2='appetizers';search(query2)">
     <div id="selectDish">
         <h2>Select Dish</h2>
         <hr>
@@ -24,7 +25,7 @@ not support it in free version) and list all the dishes that match the search. -
             </div>
            
             <div class="col-md-8">
-                    <select ng-model="query2" id="courseType" ng-change="search(query2)" ng-init="query2='appetizers'">
+                    <select ng-model="query2" id="courseType" ng-change="search(query2)" >
                         <option value="appetizers" selected>Appetizers</option>
                         <option value="main+dish">Main Dish</option>
                         <option value="dessert">Dessert</option>
@@ -42,7 +43,7 @@ not support it in free version) and list all the dishes that match the search. -
             <div class='textMiddle'>{{dish.Title}}
             </div>
             <div style='padding: 5px;overflow: auto;'>
-                <a ng-href="#/dish/{{dish.RecipeID}}" >View detail</a>
+                <a ng-href="#/dish/{{dish.RecipeID}}" ng-click="setPendingDish(dish)">View detail</a>
             </div>
 
             <div>

@@ -3,12 +3,12 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner',function ($resource) {
+dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
 
   //TODO Lab 2 implement the data structure that will hold number of guest
   // and selected dinner options for dinner menu
   var observers=[];
-  var numberOfGuests=1;
+ // var numberOfGuests=1;
   var menuID = [{'Category':'Appetizers','id': 0},{'Category':'Main Dish','id': 0},{'Category':'Desserts','id': 0}];
   //any_kw=main+dish
   //any_kw=appetizers
@@ -18,29 +18,54 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   var DetailID=0;
   var pendingID=0;
   var apiKey = "d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1";
+  var allPrice=0;
 
-
+  this.initialization=function(){
+     $cookieStore.put("fullMenuID",menuID);
+    $cookieStore.put("numberOfGuests",1);
+  }
+ 
 // 设定人数 OK
   this.setNumberOfGuests = function(num) {
     if(num>0){
-      numberOfGuests=num;
+      
+      $cookieStore.put("numberOfGuests",num);
     }
   }
 
   // 输出人数 OK
   this.getNumberOfGuests = function() {
-    return numberOfGuests;
+    return $cookieStore.get("numberOfGuests");
   }
-
+/*
+  this.setKeyword= function(keyword){
+    console.log("setkey"+keyword);
+    $cookieStore.put("keyword",keyword);
+  }
+  this.getKeyword= function(){
+    console.log("gettype"+$cookieStore.get("type"));
+    
+    return $cookieStore.get("keyword");
+  }
+  this.setType= function(Type){
+    console.log("settype"+Type);
+    
+    $cookieStore.put("type",Type);
+  }
+  this.getType= function(){
+    console.log("gettype"+$cookieStore.get("type"));
+    return $cookieStore.get("type");
+  }
+*/
  
  // 关键词搜索 OK
   this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:10,api_key:'d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1'});
   // dish详情 OK
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1'});
   this.getDish=function(inputID){
-      
+      var dish;
       this.Dish.get({id:inputID},function(data){
-          var dish=data;
+          dish=data;
          
 
       });
@@ -53,27 +78,32 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   this.setPendingID = function(id){
     
     pendingID=id;
+    console.log("set:"+pendingID);
   };
 
   this.getPendingID = function(){
+    console.log("get:"+pendingID);
     return pendingID;
   }
-
-
-//返回所有menu上面的dish 的 数组
+  var backMenuDish="";
+  this.getMenuDish=function(){
+    return backMenuDish;
+  }
+//返回所有menu上面的id 的 数组
   this.getFullMenu = function() {
-    var allDishes = [];
+    var allDishesID = [];
+    var dishID=$cookieStore.get("fullMenuID")
     
-    for(var i=0; i<menuID.length;i++){
-      if(menuID[i].id!=0){
-        
-        var dish=this.getDish(menuID[i].id);
-      
-      allDishes.push(dish);
+    
+    for(var i=0; i<dishID.length;i++){
+      if(dishID[i].id!=0){
+       
+      allDishesID.push(dishID[i].id);
       }
     }
+    console.log(allDishesID);
     
-    return allDishes;
+    return allDishesID;
   }
 
 //返回dish的成分 的 数组, 已改
@@ -94,6 +124,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   this.getPriceForDish = function(dish) {
     var dishPrice = 0;
     
+    console.log(dish);
     var dishIngredients = dish.Ingredients;
     
     for(key in dishIngredients){
@@ -107,33 +138,29 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     };
 
 
-//返回菜单的总价（乘完了人数）
-  this.getTotalMenuPrice = function() {
-    var totalPrice=0
-    var dish=this.getFullMenu();
+//设置菜单的总价（未乘人数）
+  this.setTotalMenuPrice = function(price) {
     
-    for (key in dish){
-      
-      totalPrice += this.getPriceForDish(dish[key]);
-      
-    }
-    totalPrice = totalPrice*this.getNumberOfGuests();
-    return totalPrice;
+    $cookieStore.put("totalMenuPrice",price);
+  }
+  this.getTotalMenuPrice = function(){
     
+    return $cookieStore.get("totalMenuPrice");
   }
 
 //判断id的类型是否已存在，如果未存在增加，如果存在替换
   //Adds the passed dish to the menu. If the dish of that type already exists on the menu
   //it is removed from the menu and the new one added.
-  this.addDishToMenu = function(id) {
-    var dish = this.getDish(id);
-
+  this.addDishToMenu = function(id,type) {
     for(key in menuID){ 
-      if(menuID[key].Category==dish.Category){
+      if(menuID[key].Category==type){
         
-          menuID[key].id=dish.RecipeID;
+          menuID[key].id=id;
+
       }
+
     }
+    $cookieStore.put("fullMenuID",menuID);
    
   }
 
@@ -147,6 +174,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
         menuID[key].id=0;
       }
     }
+    $cookieStore.put("fullMenuID",menuID);
     
 
     //TODO Lab 2 

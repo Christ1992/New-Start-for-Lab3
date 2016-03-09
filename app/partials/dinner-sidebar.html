@@ -23,21 +23,21 @@ this with Total price of the menu -->
                 <div class='col-sm-7'>Name:</div>
                 <div class='col-sm-4'>Cost:</div>
             </div>
-            <div class='row' ng-repeat="item in dish">
+            <div class='row' ng-repeat="item in menuDish">
                 <div class='col-sm-7'>
                 {{item.Title}}</div>
                 <div class='col-sm-3'>{{priceForAllPeople(item)}}</div>
-                <div class='col-sm-1' ng-click="removeItem(key)">
-                    <img class='removeButton'src='remove.png'>
+                <div class='col-sm-1'>
+                    <img class='removeButton'src='remove.png'  ng-click="removeItem(item.RecipeID)">
                 </div>
             </div>   
             <div class='row'>
-                <div class='col-sm-7'>Pending:</div><div class='col-sm-3'>{{pendingPrice}}</div>
+                <div class='col-sm-7'>Pending:</div><div class='col-sm-3'>{{pendingPrice*getNumberOfGuests()}}</div>
                 <div class='col-sm-1'></div>
             </div>
             <div class='row'>
                 <div class='col-sm-7'>Total:</div>
-                <div class='col-sm-4'>{{totalPrice}} SEK</div></div>
+                <div class='col-sm-4'>{{getTotalMenuPrice().toFixed(2)}} SEK</div></div>
         </div>
 
 
@@ -45,7 +45,7 @@ this with Total price of the menu -->
             <div class="col-sm-2"></div>
 
 
-            <div class="col-md-8"><a herf="#/overview.html">Confirm Dinner</button></div>
+            <div class="col-md-8"><a href="#/overview" class="btn btn-default">Confirm Dinner</a></div>
                 
 
             <div class="col-sm-2"></div>
