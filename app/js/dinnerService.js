@@ -21,8 +21,11 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   var allPrice=0;
 
   this.initialization=function(){
+    console.log("hihihi-initialization;");
      $cookieStore.put("fullMenuID",menuID);
-    $cookieStore.put("numberOfGuests",1);
+     $cookieStore.put("numberOfGuests",1);
+     console.log($cookieStore.get('fullMenuID'));
+     console.log($cookieStore.get('numberOfGuests'));
   }
  
 // 设定人数 OK
@@ -78,11 +81,10 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   this.setPendingID = function(id){
     
     pendingID=id;
-    console.log("set:"+pendingID);
   };
 
   this.getPendingID = function(){
-    console.log("get:"+pendingID);
+    
     return pendingID;
   }
   var backMenuDish="";
@@ -92,7 +94,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
 //返回所有menu上面的id 的 数组
   this.getFullMenu = function() {
     var allDishesID = [];
-    var dishID=$cookieStore.get("fullMenuID")
+    var dishID=$cookieStore.get("fullMenuID");
     
     
     for(var i=0; i<dishID.length;i++){
@@ -101,6 +103,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
       allDishesID.push(dishID[i].id);
       }
     }
+    console.log("allDishesID");
     console.log(allDishesID);
     
     return allDishesID;
@@ -111,8 +114,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
     var allIngredients = [];
 
     var ingredients = dish.Ingredients;
-    console.log(ingredients);
-
+    
     for(ingredient in ingredients){
       allIngredients.push(ingredient);
     }
@@ -124,12 +126,11 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   this.getPriceForDish = function(dish) {
     var dishPrice = 0;
     
-    console.log(dish);
     var dishIngredients = dish.Ingredients;
     
-    for(key in dishIngredients){
+    for(f in dishIngredients){
       
-      dishPrice += dishIngredients[key].Quantity;
+      dishPrice += dishIngredients[f].Quantity;
       
     }
 
@@ -152,15 +153,22 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   //Adds the passed dish to the menu. If the dish of that type already exists on the menu
   //it is removed from the menu and the new one added.
   this.addDishToMenu = function(id,type) {
-    for(key in menuID){ 
-      if(menuID[key].Category==type){
-        
-          menuID[key].id=id;
+    
+    var dishID= $cookieStore.get("fullMenuID");
 
+    for(x in dishID){ 
+      if(dishID[x].Category==type){
+        
+          dishID[x].id=id;
+          console.log("dishID["+x+"]="+id);
       }
 
     }
+    menuID=dishID;
+    console.log("运行addDishToMenu之后的menuID");
+    console.log(menuID);
     $cookieStore.put("fullMenuID",menuID);
+    
    
   }
 
@@ -168,13 +176,22 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   //Removes dish from menu
   this.removeDishFromMenu = function(id) {
     
-    for(key in menuID){ 
-      if( menuID[key].id == id)
+    var dishID= $cookieStore.get("fullMenuID");
+
+    for(key in dishID){ 
+      console.log("运行model的delete之前的menuID");
+      console.log(dishID);
+      if( dishID[key].id == id)
       {
-        menuID[key].id=0;
+        dishID[key].id=0;
       }
     }
+    menuID=dishID;
+    console.log("运行model的delete之后的menuID");
+    console.log(menuID);
     $cookieStore.put("fullMenuID",menuID);
+    console.log($cookieStore.get("fullMenuID"));
+
     
 
     //TODO Lab 2 

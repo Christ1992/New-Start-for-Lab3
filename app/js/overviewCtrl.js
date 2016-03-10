@@ -6,18 +6,25 @@ dinnerPlannerApp.controller('OverviewCtrl', function ($scope,Dinner) {
   $scope.dishID = Dinner.getFullMenu();
   console.log("aaa"+$scope.dishID);
 	$scope.menuDish = new Array();
+  $scope.priceForDish  = new Array();
   //获取菜的详情
   for(item in $scope.dishID){
 
     Dinner.Dish.get({id:$scope.dishID[item]},function(data){
             $scope.menuDish.push(data);
+            var price=Dinner.getPriceForDish(data);
+            $scope.priceForDish.push(price);
 
         });
     };
 	
 
 	 $scope.getPriceForDish= function(dish){
-		return Dinner.getPriceForDish(dish)*Dinner.getNumberOfGuests();
+    for(key in $scope.menuDish){
+                  if(dish==$scope.menuDish[key]){
+                    return $scope.priceForDish[key]*Dinner.getNumberOfGuests();
+                  }
+                }
 		}
 	$scope.getTotalMenuPrice = function(){
 

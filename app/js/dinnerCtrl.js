@@ -2,9 +2,7 @@
 // display or modify the dinner menu
 dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
 
-  $scope.createNew=function(){
-      Dinner.initialization();
-    }
+  
 //人数设定
   $scope.numberOfGuests = Dinner.getNumberOfGuests();
 
@@ -21,26 +19,30 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
   $scope.totalPrice=0;
 
   $scope.menuDish = new Array();
-
+  $scope.priceForDish  = new Array();
 	//menu菜ID设定
   $scope.dishID = Dinner.getFullMenu();
-  console.log("ddd"+$scope.dishID);
+ // console.log("menu的ID："+$scope.dishID);
 
   //获取菜的详情
   for(item in $scope.dishID){
     //console.log($scope.dishID[item]);
     Dinner.Dish.get({id:$scope.dishID[item]},function(data){
             $scope.menuDish.push(data);
-            console.log($scope.menuDish);
-            $scope.priceForDish=Dinner.getPriceForDish(data);
-            $scope.totalPrice+=$scope.priceForDish;
+            var price = Dinner.getPriceForDish(data);
+            $scope.priceForDish.push(price);
+            $scope.totalPrice+=price;
             
         });
     };
   
   
   $scope.priceForAllPeople = function(dish) {
-                return Dinner.getPriceForDish(dish)*Dinner.getNumberOfGuests();
+                for(key in $scope.menuDish){
+                  if(dish==$scope.menuDish[key]){
+                    return $scope.priceForDish[key]*Dinner.getNumberOfGuests();
+                  }
+                }
             }
   
 	//价格返回  
@@ -50,17 +52,20 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
   $scope.removeItem = function(ID) {
     console.log("快调用我");
     Dinner.Dish.get({id:ID},function(data){
-            for(key in $scope.menuDish){
-              if(ID==$scope.menuDish[key].RecipeID){
-                //$scope.menuDish[key];
-                $scope.menuDish.splice(key,1);
+            for(n in $scope.menuDish){
+              if(ID==$scope.menuDish[n].RecipeID){
+                console.log("$scope.menuDish[n]");
+                console.log($scope.menuDish[n]);
+                $scope.menuDish.splice(n,1);
+                $scope.priceForDish.splice(n,1);
                 $scope.totalPrice=$scope.totalPrice-Dinner.getPriceForDish(data);
-                console.log("$scope.menuDish"+key);
+                console.log("$scope.menuDish"+n);
                 console.log($scope.menuDish);
+                
               }
-            }
+            }Dinner.removeDishFromMenu(ID);
         });
-  	return Dinner.removeDishFromMenu(ID);
+  	
   }
 
   

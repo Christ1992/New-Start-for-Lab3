@@ -4,7 +4,11 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
 
   // TODO in Lab 5: you will need to implement a method that searchers for dishes
   // including the case while the search is still running.
-  
+  $scope.createNew=function(){
+      Dinner.initialization();
+      console.log("initialization");
+    }
+ 
   $scope.getKeyword=function(){
     return Dinner.getKeyword();
   }
@@ -24,7 +28,6 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
    Dinner.DishSearch.get({any_kw:query},function(data){
      //Dinner.setKeyword(query);
          $scope.dishes=data.Results;
-         console.log($scope.dishes);
          $scope.status = "Showing " + data.Results.length + " results";
        },function(data){
          $scope.status = "There was an error";
@@ -33,7 +36,6 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
   }
 
   $scope.setPendingDish=function(data){
-    console.log(data);
     $scope.pendingID=data.RecipeID;
     Dinner.setPendingID($scope.pendingID);  
   }
